@@ -58,6 +58,25 @@ static func set_app_muted(muted: bool) -> void:
 	if _plugin:
 		_plugin.set_app_muted(muted)
 
+static func set_gad_has_consent_for_cookies(enabled: bool) -> bool:
+	if _plugin:
+		return bool(_plugin.set_gad_has_consent_for_cookies(enabled))
+	return false
+
+static func clear_gad_has_consent_for_cookies() -> bool:
+	if _plugin:
+		return bool(_plugin.clear_gad_has_consent_for_cookies())
+	return false
+
+static func get_gad_has_consent_for_cookies() -> bool:
+	if _plugin:
+		return _plugin.get_gad_has_consent_for_cookies()
+	return true
+
+static func set_publisher_first_party_id_enabled(enabled: bool) -> void:
+	if _plugin:
+		_plugin.set_publisher_first_party_id_enabled(enabled)
+
 static func _on_initialization_complete(admob_initialization_status: Dictionary) -> void:
 	var initialization_status := InitializationStatus.create(admob_initialization_status)
 	_current_on_initialization_complete_listener.on_initialization_complete.call_deferred(initialization_status)

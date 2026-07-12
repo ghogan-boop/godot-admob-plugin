@@ -24,6 +24,7 @@
 package com.poingstudios.godot.admob.ads
 
 import android.app.Activity
+import android.preference.PreferenceManager
 import android.util.ArraySet
 import android.view.View
 import android.widget.FrameLayout
@@ -95,5 +96,32 @@ class PoingGodotAdMob(godot: Godot?) : org.godotengine.godot.plugin.GodotPlugin(
     @UsedByGodot
     fun set_app_muted(muted: Boolean) {
         MobileAds.setAppMuted(muted)
+    }
+
+    @UsedByGodot
+    fun set_gad_has_consent_for_cookies(enabled: Boolean): Boolean {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(aActivity)
+        val stored = preferences.edit()
+            .putInt("gad_has_consent_for_cookies", if (enabled) 1 else 0)
+            .commit()
+        return stored && preferences.getInt("gad_has_consent_for_cookies", -1) == (if (enabled) 1 else 0)
+    }
+
+    @UsedByGodot
+    fun clear_gad_has_consent_for_cookies(): Boolean {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(aActivity)
+        val cleared = preferences.edit().remove("gad_has_consent_for_cookies").commit()
+        return cleared && !preferences.contains("gad_has_consent_for_cookies")
+    }
+
+    @UsedByGodot
+    fun get_gad_has_consent_for_cookies(): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(aActivity)
+            .getInt("gad_has_consent_for_cookies", 1) == 1
+    }
+
+    @UsedByGodot
+    fun set_publisher_first_party_id_enabled(enabled: Boolean) {
+        MobileAds.putPublisherFirstPartyIdEnabled(enabled)
     }
 }

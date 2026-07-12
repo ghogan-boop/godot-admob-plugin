@@ -45,6 +45,10 @@ public:
     void set_ios_app_pause_on_background(bool pause);
     void set_app_volume(float volume);
     void set_app_muted(bool muted);
+    bool set_gad_has_consent_for_cookies(bool enabled);
+    bool clear_gad_has_consent_for_cookies();
+    bool get_gad_has_consent_for_cookies();
+    void set_publisher_first_party_id_enabled(bool enabled);
 
     static PoingGodotAdMob *get_singleton();
 
