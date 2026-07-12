@@ -22,8 +22,7 @@ jobs:
       - name: Build Android plugin
         working-directory: platforms/android
         run: |
-          chmod +x ./scripts/unix/download_godot.sh ./gradlew
-          ./scripts/unix/download_godot.sh "${{ inputs.godot_version }}"
+          chmod +x ./gradlew
           ./gradlew build -PgodotVersion="${{ inputs.godot_version }}"
           ./gradlew zipPlugins -PgodotVersion="${{ inputs.godot_version }}"
       - uses: actions/upload-artifact@v4
