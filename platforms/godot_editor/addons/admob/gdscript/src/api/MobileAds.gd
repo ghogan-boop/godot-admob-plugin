@@ -77,9 +77,16 @@ static func set_publisher_first_party_id_enabled(enabled: bool) -> void:
 		_plugin.set_publisher_first_party_id_enabled(enabled)
 
 
-static func set_gad_has_consent_for_cookies(enabled: bool) -> void:
+static func set_gad_has_consent_for_cookies(enabled: bool) -> bool:
 	if _plugin:
-		_plugin.set_gad_has_consent_for_cookies(enabled)
+		return bool(_plugin.set_gad_has_consent_for_cookies(enabled))
+	return false
+
+
+static func clear_gad_has_consent_for_cookies() -> bool:
+	if _plugin:
+		return bool(_plugin.clear_gad_has_consent_for_cookies())
+	return false
 
 
 static func get_gad_has_consent_for_cookies() -> bool:

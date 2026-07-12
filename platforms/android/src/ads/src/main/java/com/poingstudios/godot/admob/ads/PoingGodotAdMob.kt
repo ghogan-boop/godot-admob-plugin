@@ -101,9 +101,19 @@ class PoingGodotAdMob(godot: Godot?) : org.godotengine.godot.plugin.GodotPlugin(
     }
 
     @UsedByGodot
-    fun set_gad_has_consent_for_cookies(enabled: Boolean) {
+    fun set_gad_has_consent_for_cookies(enabled: Boolean): Boolean {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(aActivity)
-        sharedPrefs.edit().putInt("gad_has_consent_for_cookies", if (enabled) 1 else 0).apply()
+        val stored = sharedPrefs.edit()
+            .putInt("gad_has_consent_for_cookies", if (enabled) 1 else 0)
+            .commit()
+        return stored && sharedPrefs.getInt("gad_has_consent_for_cookies", -1) == (if (enabled) 1 else 0)
+    }
+
+    @UsedByGodot
+    fun clear_gad_has_consent_for_cookies(): Boolean {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(aActivity)
+        val cleared = sharedPrefs.edit().remove("gad_has_consent_for_cookies").commit()
+        return cleared && !sharedPrefs.contains("gad_has_consent_for_cookies")
     }
 
     @UsedByGodot

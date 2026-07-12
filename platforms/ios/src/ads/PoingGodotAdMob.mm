@@ -95,8 +95,14 @@ void PoingGodotAdMob::set_publisher_first_party_id_enabled(bool enabled) {
     [[GADMobileAds sharedInstance].requestConfiguration setPublisherFirstPartyIDEnabled:enabled];
 }
 
-void PoingGodotAdMob::set_gad_has_consent_for_cookies(bool enabled) {
+bool PoingGodotAdMob::set_gad_has_consent_for_cookies(bool enabled) {
     [[NSUserDefaults standardUserDefaults] setInteger:(enabled ? 1 : 0) forKey:@"gad_has_consent_for_cookies"];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"gad_has_consent_for_cookies"] integerValue] == (enabled ? 1 : 0);
+}
+
+bool PoingGodotAdMob::clear_gad_has_consent_for_cookies() {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"gad_has_consent_for_cookies"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"gad_has_consent_for_cookies"] == nil;
 }
 
 bool PoingGodotAdMob::get_gad_has_consent_for_cookies() {
@@ -142,6 +148,7 @@ void PoingGodotAdMob::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_app_muted"), &PoingGodotAdMob::set_app_muted);
     ClassDB::bind_method(D_METHOD("set_publisher_first_party_id_enabled"), &PoingGodotAdMob::set_publisher_first_party_id_enabled);
     ClassDB::bind_method(D_METHOD("set_gad_has_consent_for_cookies"), &PoingGodotAdMob::set_gad_has_consent_for_cookies);
+    ClassDB::bind_method(D_METHOD("clear_gad_has_consent_for_cookies"), &PoingGodotAdMob::clear_gad_has_consent_for_cookies);
     ClassDB::bind_method(D_METHOD("get_gad_has_consent_for_cookies"), &PoingGodotAdMob::get_gad_has_consent_for_cookies);
     ClassDB::bind_method(D_METHOD("disable_sdk_crash_reporting"), &PoingGodotAdMob::disable_sdk_crash_reporting);
     ClassDB::bind_method(D_METHOD("get_platform_version"), &PoingGodotAdMob::get_platform_version);
